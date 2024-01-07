@@ -1,0 +1,68 @@
+#root {
+    height: 100%;
+}
+/* .popover-arrow {
+    display: none !important;
+} */
+
+
+.filter-block{
+    background-color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    color: #222;
+    border-radius: 6px;
+    padding: 5px 12px;
+    cursor: pointer;
+}
+
+.filter-block__deatils {
+    padding: 0;
+    margin: 0;
+}
+
+.filter-block__delete {
+    background-color: #eef0fc;
+    color: #334bfa;
+    /* opacity: 0; */
+}
+ 
+.filter-block__clickable:hover{
+    color: #334bfa;
+}
+
+
+.filter-group__add-button-wrapper {
+    /* background-color: #fff; */
+    border-left: 1px solid #fff !important;
+    opacity: 1 !important;
+    position: relative !important;
+    width: 15px !important;
+    padding: 4px 12px !important;
+    /* margin-right: -36px; */
+    /* right: 36px; */
+}
+
+.filter-group__add-button {
+    color: #757575;
+    background-color: #f1f1f1;
+    padding: 6px 8px 6px 10px;
+    text-decoration-line: none;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border: 0 solid transparent;
+}
+.filter-group__add-button.show{
+    background-color: transparent;
+}
+.filter-group__add-button:hover {
+    background-color: transparent;
+}
+.filter-group__add-button::after {
+    display: none;
+}
+.filter-group__add-button:active {
+    background-color: transparent !important;
+}
+.all-unset {
+    all: unset;
+}
