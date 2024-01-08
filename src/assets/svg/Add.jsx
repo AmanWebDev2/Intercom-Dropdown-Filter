@@ -3,15 +3,15 @@ import React from 'react'
 const Add = () => {
   return (
     <svg
-    class="interface-icon o__tiny o__tiny__new o__by-text"
+    className="interface-icon o__tiny o__tiny__new o__by-text"
     width="12"
     height="12"
     viewBox="0 0 12 12"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M6.00039 1.1543C6.46983 1.1543 6.85039 1.53485 6.85039 2.0043V5.14971L10.0004 5.14972C10.4698 5.14972 10.8504 5.53027 10.8504 5.99972C10.8504 6.46916 10.4698 6.84972 10.0004 6.84972L6.85039 6.84971V9.99513C6.85039 10.4646 6.46983 10.8451 6.00039 10.8451C5.53095 10.8451 5.15039 10.4646 5.15039 9.99513V6.84971H2.00039C1.53095 6.84971 1.15039 6.46916 1.15039 5.99971C1.15039 5.53027 1.53095 5.14971 2.00039 5.14971H5.15039V2.0043C5.15039 1.53485 5.53095 1.1543 6.00039 1.1543Z"
     ></path>
   </svg>

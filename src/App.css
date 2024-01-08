@@ -1,16 +1,19 @@
 #root {
     height: 100%;
 }
-/* .popover-arrow {
+.popover-arrow {
     display: none !important;
-} */
+}
+
+#dropdown-basic {
+    border-radius: 0;
+}
 
 
 .filter-block{
     background-color: #f1f1f1;
     border: 1px solid #f1f1f1;
     color: #222;
-    border-radius: 6px;
     padding: 5px 12px;
     cursor: pointer;
 }
@@ -31,6 +34,7 @@
 }
 .filter-block__clickable:hover {
     color: #334bfa;
+    background-color: #eef0fc;
 }
 .filter-block__clickable:hover svg {
     color: #334bfa;
@@ -42,14 +46,10 @@
     opacity: 1;
 }
 .filter-group__add-button-wrapper {
-    /* background-color: #fff; */
     border-left: 1px solid #fff !important;
     opacity: 1 !important;
     position: relative !important;
-    /* width: 15px !important; */
-    padding: 5px 12px !important;
-    /* margin-right: -36px; */
-    /* right: 36px; */
+    padding: 6px 12px !important;
 }
 
 .filter-group__add-button {
@@ -62,7 +62,7 @@
     border: 0 solid transparent;
 }
 .filter-group__add-button.show{
-    background-color: transparent;
+    background-color: #f1f1f1;
 }
 .filter-group__add-button:hover {
     background-color: transparent;
@@ -78,4 +78,48 @@
 }
 .all-unset {
     all: unset;
+}
+
+.filter-group__connection-switcher__label {
+    min-width: 24px;
+    float: left;
+    padding: 6px 10px;
+    text-align: center;
+    font-weight: 600;
+    background-color: #f1f1f1;
+    color: #757575;
+    border: 0 solid transparent;
+    border-radius: 0;
+}
+
+.filter-group__connection-switcher__label:hover {
+    background-color: #eef0fc;
+    color: #334bfa;
+}
+
+.filter-group__connection-switcher__label:active {
+    background-color: #eef0fc !important;
+    color: #334bfa !important;
+}
+.filter-group__connection-switcher__label.show{
+    background-color: #eef0fc !important;
+    color: #334bfa !important;
+}
+
+.filter-connection__seperate-group{
+    margin: 0px 16px;
+    background-color: transparent;
+}
+
+.filter-connection__seperate-group:hover{
+    background-color: transparent;
+}
+
+.filter-connection__seperate-group:active{
+    background-color: transparent;
+}
+
+.filter-connection__seperate-group.show{
+    background-color: transparent !important;
+    color: #334bfa !important;
 }
