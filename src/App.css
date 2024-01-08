@@ -23,21 +23,31 @@
 .filter-block__delete {
     background-color: #eef0fc;
     color: #334bfa;
-    /* opacity: 0; */
+    opacity: 0;
 }
- 
-.filter-block__clickable:hover{
+
+.filter-block__delete svg {
+    fill: #334bfa;
+}
+.filter-block__clickable:hover {
     color: #334bfa;
 }
+.filter-block__clickable:hover svg {
+    color: #334bfa;
+    fill: #334bfa;
+}
 
-
+.filter-block__clickable:hover .filter-block__delete{
+    color: #334bfa;
+    opacity: 1;
+}
 .filter-group__add-button-wrapper {
     /* background-color: #fff; */
     border-left: 1px solid #fff !important;
     opacity: 1 !important;
     position: relative !important;
-    width: 15px !important;
-    padding: 4px 12px !important;
+    /* width: 15px !important; */
+    padding: 5px 12px !important;
     /* margin-right: -36px; */
     /* right: 36px; */
 }
@@ -62,6 +72,9 @@
 }
 .filter-group__add-button:active {
     background-color: transparent !important;
+}
+.filter-group__add-button-wrapper:active,.filter-group__add-button-wrapper:hover  {
+    background-color: #f1f1f1 !important;
 }
 .all-unset {
     all: unset;

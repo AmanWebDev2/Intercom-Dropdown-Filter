@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { Dropdown, OverlayTrigger, Form, Popover } from "react-bootstrap";
 
 import { attributes, dropdownMenu } from "../data/data";
-import cross from "../assets/cross.svg";
 import add from "../assets/add.svg";
-import link from "../assets/link.svg";
+import Cross from "../assets/svg/Cross";
+import Link from "../assets/svg/Link";
 
 const WhereToSend = () => {
   const [predicates, setPredicates] = useState([]);
@@ -190,6 +190,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
           if (Array.isArray(item?.predicate)) {
             return item.predicate.map((nestedPredicate, index) => {
               return (
+                <>
                 <div
                   data-position={JSON.stringify({
                     groupIndex,
@@ -223,7 +224,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       <div className="d-flex align-items-center justify-content-center">
                         <div className="cover">
                           <span className="filter-block__icon">
-                            <img src={link} alt="link" />
+                            <Link/>
                             &nbsp;{nestedPredicate.readable}
                           </span>
                         </div>
@@ -243,11 +244,13 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                             })
                           }
                         >
-                          <img src={cross} alt="cross-icon" />
+                         
+                         <Cross/>
                         </div>
                       </div>
                     </OverlayTrigger>
                   </div>
+                  {/* add predicate */}
                   {index === item.predicate.length - 1 && (
                     <AddOnPredicate
                       handlePredicate={(event, newPredicate) =>
@@ -260,6 +263,8 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       }
                     />
                   )}
+                
+                </div>
                   {index < item.predicate.length - 1 && (
                     <Dropdown style={{ marginLeft: "1rem" }}>
                       <Dropdown.Toggle className="" id="dropdown-basic">
@@ -271,7 +276,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       </Dropdown.Menu>
                     </Dropdown>
                   )}
-                </div>
+                  </>
               );
             });
           } else {
@@ -305,7 +310,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                   <div className="d-flex align-items-center justify-content-center">
                     <div className="cover">
                       <span className="filter-block__icon">
-                        <img src={link} alt="link" />
+                       <Link/>
                         &nbsp;{item.readable}
                       </span>
                     </div>
@@ -322,7 +327,8 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                         })
                       }
                     >
-                      <img src={cross} alt="cross-icon" />
+                      <Cross/>
+
                     </div>
                   </div>
                 </OverlayTrigger>
