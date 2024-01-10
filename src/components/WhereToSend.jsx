@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { Dropdown, OverlayTrigger, Form, Popover } from "react-bootstrap";
 
-import { attributes, dropdownMenu } from "../data/data";
+import { attributes, comparison, dropdownMenu } from "../data/data";
 import Cross from "../assets/svg/Cross";
 import Link from "../assets/svg/Link";
 import Add from "../assets/svg/Add";
@@ -264,7 +264,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                           </div>
                           <p className="filter-block__deatils">
                             &nbsp;{" "}
-                            {nestedPredicate.comparison +
+                            {comparison.get(nestedPredicate.comparison) +
                               " " +
                               nestedPredicate.value}
                           </p>
@@ -357,7 +357,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                         </span>
                       </div>
                       <p className="filter-block__deatils">
-                        &nbsp; {item.comparison + " " + item.value}
+                        &nbsp; {comparison.get(item.comparison) + " " + item.value}
                       </p>
                       {/* cancel button */}
                       <div

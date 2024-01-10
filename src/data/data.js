@@ -1,4 +1,4 @@
-//const comparison = new Map([["eq","is"],["ne","is not"],["starts_with","starts with"],["ends_with","ends with"],["contains","contains"],["contains_exact_word","contains exact word"],["not_contains","does not contain"],["unknown","is unknown"],["known","has any value"]])
+const comparison = new Map([["eq","is"],["ne","is not"],["starts_with","starts with"],["ends_with","ends with"],["contains","contains"],["contains_exact_word","contains exact word"],["not_contains","does not contain"],["unknown","is unknown"],["known","has any value"]])
 const dropdownMenu = [
   {
     attribute: "last_visited_url",
@@ -38,4 +38,4 @@ const attributes = [
   },
 ];
 
-export { attributes,dropdownMenu };
+export { attributes,dropdownMenu,comparison };
