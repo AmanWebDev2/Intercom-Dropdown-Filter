@@ -124,3 +124,13 @@
     background-color: transparent !important;
     color: #334bfa !important;
 }
+
+#filter-popover{
+    min-width: 300px;
+    max-width: 300px;
+    max-height: 420px;
+}
+
+.filter-input{
+    padding: 2px 10px;
+}

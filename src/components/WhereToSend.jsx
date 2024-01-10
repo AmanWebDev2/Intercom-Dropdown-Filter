@@ -10,10 +10,6 @@ import Add from "../assets/svg/Add";
 const WhereToSend = () => {
   const [predicates, setPredicates] = useState([]);
 
-  useEffect(() => {
-    console.log("useeffect", predicates);
-  }, [predicates]);
-
   const handlePredicate = (
     type,
     newPredicate,
@@ -25,7 +21,7 @@ const WhereToSend = () => {
 
     if (type === "nested") {
       const temp = JSON.parse(JSON.stringify([...predicates]));
-      console.log("before", temp);
+      // console.log("before", temp);
       if (
         Array.isArray(currentPredicate) ||
         Array.isArray(currentPredicate?.predicate)
@@ -34,7 +30,7 @@ const WhereToSend = () => {
         predObj.predicate.push(newPredicateWithID);
         const temp = [...predicates];
         temp.splice(groupIndex, 1, predObj);
-        console.log(temp);
+        // console.log(temp);
         setPredicates([...temp]);
       } else {
         const index = predicates.findIndex(
@@ -81,10 +77,6 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
   // tracking the active predicate
   const [active, setActive] = useState(null);
 
-  useEffect(() => {
-    // console.log(active);
-  }, [active]);
-
   const popover = () => {
     const dropdownData = dropdownMenu.find(
       (item) => item.attribute === active?.attribute
@@ -105,7 +97,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
         delete newActiveClone.pos;
         nestedPredicateObj.predicate.splice(activeIndex, 1, newActiveClone);
         setActive(newActive);
-        console.log(predicatesTemp, nestedPredicateObj);
+        // console.log(predicatesTemp, nestedPredicateObj);
         predicatesTemp.splice(pos.groupIndex, 1, nestedPredicateObj);
         setPredicates([...predicatesTemp]);
       } else {
@@ -118,8 +110,28 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
       }
     };
 
+    const handleInputChange = (e) => {
+      // console.log(active);
+      const { pos } = active;
+      const { groupIndex, nestedIndex } = pos;
+      const updatedCurrentPred = { ...active };
+      delete updatedCurrentPred.pos;
+      updatedCurrentPred.value = e.target.value;
+
+      const temp = JSON.parse(JSON.stringify(predicates));
+      if (nestedIndex == -1) {
+        // group
+        temp.splice(groupIndex, 1, updatedCurrentPred);
+        setPredicates([...temp]);
+      } else {
+        const nestedPredObj = temp[groupIndex];
+        nestedPredObj.predicate[nestedIndex].value = e.target.value;
+        setPredicates([...temp]);
+      }
+    };
+
     return (
-      <Popover id="popover-basic">
+      <Popover id="filter-popover">
         <Popover.Body>
           <div>
             <Form>
@@ -136,11 +148,21 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                         onChange={(e) => handleChange(e, item)}
                       />
 
-                      {active.comparison === Object.keys(item)[0] && (
-                        <div className="container">
-                          <input type="text" name="" id="" />
-                        </div>
-                      )}
+                      {active.comparison === Object.keys(item)[0] &&
+                        active.comparison != "unknown" &&
+                        active.comparison != "known" && (
+                          <div className="container">
+                            <Form.Control
+                              className="filter-input"
+                              type="text"
+                              id="filter-text"
+                              aria-describedby="filter-text"
+                              autoFocus
+                              defaultValue={active.value}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        )}
                     </div>
                   );
                 })}
@@ -179,9 +201,11 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
     currentPredicate,
     groupIndex
   ) => {
-    console.log(event, newpredicate, currentPredicate);
+    // console.log(event, newpredicate, currentPredicate);
     handlePredicate("nested", newpredicate, currentPredicate, groupIndex);
   };
+
+  const handleFilterConnectionSwitcher = (type, pos) => {};
 
   return (
     <>
@@ -204,6 +228,16 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       data-id={index}
                     >
                       <OverlayTrigger
+                        popperConfig={{
+                          modifiers: [
+                            {
+                              name: "offset",
+                              options: {
+                                offset: [0, 8],
+                              },
+                            },
+                          ],
+                        }}
                         onToggle={(f) => {
                           if (!f) {
                             setActive(null);
@@ -266,7 +300,12 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                   {index < item.predicate.length - 1 && (
                     <FilterConnectionSwitcher
                       item={item}
-                      handleSelect={() => {}}
+                      handleSelect={(type) => {
+                        handleFilterConnectionSwitcher(type, {
+                          groupIndex,
+                          index,
+                        });
+                      }}
                     />
                   )}
                 </>
@@ -281,8 +320,17 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                   data-id={groupIndex}
                 >
                   <OverlayTrigger
+                    popperConfig={{
+                      modifiers: [
+                        {
+                          name: "offset",
+                          options: {
+                            offset: [0, 14],
+                          },
+                        },
+                      ],
+                    }}
                     onToggle={(f) => {
-                      console.log(f);
                       if (!f) {
                         setActive(null);
                       } else {
@@ -338,7 +386,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                   />
                 </div>
                 {/* <pre>{groupIndex +"--"+ +(predicates.length-1)}</pre> */}
-                {(groupIndex < (predicates.length - 1)) && (
+                {groupIndex < predicates.length - 1 && (
                   <FilterConnectionSwitcher
                     item={item}
                     handleSelect={() => {}}
@@ -355,7 +403,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
 };
 
 const FilterConnectionSwitcher = ({ item, handleSelect, newClass }) => {
-  console.log(item);
+  // console.log(item);
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -364,7 +412,11 @@ const FilterConnectionSwitcher = ({ item, handleSelect, newClass }) => {
       >
         {item.type == "or" ? "or" : "and"}
       </Dropdown.Toggle>
-      <Dropdown.Menu onSelect={handleSelect}>
+      <Dropdown.Menu
+        onSelect={(e) => {
+          console.log(e);
+        }}
+      >
         <Dropdown.Item> and </Dropdown.Item>
         <Dropdown.Item>or</Dropdown.Item>
       </Dropdown.Menu>
