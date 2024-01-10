@@ -50,7 +50,7 @@ const WhereToSend = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container my-5">
       <strong>Where to send</strong>
 
       <div>

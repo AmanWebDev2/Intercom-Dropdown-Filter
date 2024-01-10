@@ -87,16 +87,13 @@ const Demo = () => {
   //   </Popover>
   // );
 
-  useEffect(() => {
-    console.log(active);
-  }, [active]);
 
   return (
-    <div className="row">
-      <strong> Where to send </strong>
-      <div className="col">
+    <div className="container mt-4 mb-5">
+      <strong> DEMO </strong>
+      <div className="">
         <span>
-          <div>
+          <div className="">
             <span className="d-flex align-items-center justify-content-center gap-3">
               {data.map((e, i) => {
                 return (
