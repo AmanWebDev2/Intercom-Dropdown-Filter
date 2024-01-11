@@ -10,6 +10,10 @@ import Add from "../assets/svg/Add";
 const WhereToSend = () => {
   const [predicates, setPredicates] = useState([]);
 
+  useEffect(()=>{
+    console.log(predicates);
+  },[predicates]);
+
   const handlePredicate = (
     type,
     newPredicate,
@@ -214,7 +218,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
           if (Array.isArray(item?.predicate)) {
             return item.predicate.map((nestedPredicate, index) => {
               return (
-                <>
+                <div className="d-flex align-items-center justify-content-center" key={index}>
                   <div
                     data-position={JSON.stringify({
                       groupIndex,
@@ -224,7 +228,6 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                   >
                     <div
                       className="filter-block filter-block__clickable d-flex align-items-center justify-content-center"
-                      key={index}
                       data-id={index}
                     >
                       <OverlayTrigger
@@ -284,7 +287,9 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       </OverlayTrigger>
                     </div>
                     {/* add predicate */}
-                    {index === item.predicate.length - 1 && (
+                {/* <pre>{groupIndex +"--"+ +(predicates.length-1)}</pre> */}
+
+                    {(index == item.predicate.length - 1) && (
                       <AddOnPredicate
                         handlePredicate={(event, newPredicate) =>
                           handleAddPredicateButton(
@@ -297,9 +302,10 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       />
                     )}
                   </div>
-                  {index < item.predicate.length - 1 && (
+                  {((index < item.predicate.length - 1) || (item.predicate.length-1 == index) )&& (
                     <FilterConnectionSwitcher
                       item={item}
+                      newClass={`${item.predicate.length-1  == index ? "filter-connection__seperate-group" : ''}`}
                       handleSelect={(type) => {
                         handleFilterConnectionSwitcher(type, {
                           groupIndex,
@@ -308,15 +314,14 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       }}
                     />
                   )}
-                </>
+                </div>
               );
             });
           } else {
             return (
-              <>
+              <div className="d-flex align-items-center align-items-center" key={groupIndex}>
                 <div
                   className="filter-block filter-block__clickable d-flex align-items-center justify-content-center"
-                  key={groupIndex}
                   data-id={groupIndex}
                 >
                   <OverlayTrigger
@@ -393,7 +398,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                     newClass={`filter-connection__seperate-group`}
                   />
                 )}
-              </>
+              </div>
             );
           }
         })}
