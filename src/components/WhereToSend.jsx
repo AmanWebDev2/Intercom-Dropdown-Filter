@@ -302,7 +302,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                       />
                     )}
                   </div>
-                  {((index < item.predicate.length - 1) || (item.predicate.length-1 == index) )&& (
+                  {((index < item.predicate.length - 1) || ((item.predicate.length-1 == index) && (predicates.length-1 != groupIndex)) )&& (
                     <FilterConnectionSwitcher
                       item={item}
                       newClass={`${item.predicate.length-1  == index ? "filter-connection__seperate-group" : ''}`}
