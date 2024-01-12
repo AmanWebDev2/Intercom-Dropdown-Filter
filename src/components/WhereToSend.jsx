@@ -10,9 +10,9 @@ import Add from "../assets/svg/Add";
 const WhereToSend = () => {
   const [predicates, setPredicates] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(predicates);
-  },[predicates]);
+  }, [predicates]);
 
   const handlePredicate = (
     type,
@@ -209,117 +209,166 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
     handlePredicate("nested", newpredicate, currentPredicate, groupIndex);
   };
 
-  const handleFilterConnectionSwitcher = (type, pos) => {};
+  const handleFilterConnectionSwitcher = (type, pos) => {
+    console.log(type, pos);
+    const { groupIndex, nestedIndex } = pos;
+    const temp = JSON.parse(JSON.stringify(predicates));
+    if (nestedIndex !== -1) {
+      temp[groupIndex].type = type;
+      setPredicates([...temp]);
+    } else {
+      // if(type!=="or") {
+      //   return
+      // }
+      // const newPredicate = [
+      //   {
+      //     predicate: temp,
+      //     type,
+      //   },
+      // ];
+      // console.log(newPredicate);
+      // setPredicates([...newPredicate]);
+    }
+  };
 
   return (
     <>
       <span className="d-flex align-items-center flex-wrap my-4 ">
+        {
+
+        }
         {predicates.map((item, groupIndex) => {
           if (Array.isArray(item?.predicate)) {
-            return item.predicate.map((nestedPredicate, index) => {
-              return (
-                <div className="d-flex align-items-center justify-content-center" key={index}>
-                  <div
-                    data-position={JSON.stringify({
-                      groupIndex,
-                      nestedIndex: index,
-                    })}
-                    className="d-flex align-items-center justify-content-center"
-                  >
+            return (
+              <>
+                {item.predicate.map((nestedPredicate, index) => {
+                  return (
                     <div
-                      className="filter-block filter-block__clickable d-flex align-items-center justify-content-center"
-                      data-id={index}
+                      className="d-flex align-items-center justify-content-center"
+                      key={index}
                     >
-                      <OverlayTrigger
-                        popperConfig={{
-                          modifiers: [
-                            {
-                              name: "offset",
-                              options: {
-                                offset: [0, 8],
-                              },
-                            },
-                          ],
-                        }}
-                        onToggle={(f) => {
-                          if (!f) {
-                            setActive(null);
-                          } else {
-                            setActive({
-                              ...nestedPredicate,
-                              pos: { groupIndex, nestedIndex: index },
-                            });
-                          }
-                        }}
-                        show={active ? active.id === nestedPredicate.id : false}
-                        trigger="click"
-                        placement="bottom"
-                        transition={false}
-                        rootClose={true}
-                        overlay={active ? popover() : <></>}
+                      <div
+                        data-position={JSON.stringify({
+                          groupIndex,
+                          nestedIndex: index,
+                        })}
+                        className="d-flex align-items-center justify-content-center"
                       >
-                        <div className="d-flex align-items-center justify-content-center">
-                          <div className="cover">
-                            <span className="filter-block__icon">
-                              <Link />
-                              &nbsp;{nestedPredicate.readable}
-                            </span>
-                          </div>
-                          <p className="filter-block__deatils">
-                            &nbsp;{" "}
-                            {comparison.get(nestedPredicate.comparison) +
-                              " " +
-                              nestedPredicate.value}
-                          </p>
-                          {/* cancel button */}
-                          <div
-                            className="filter-block__delete"
-                            onClick={() =>
-                              handleDeletePredicate(nestedPredicate, {
-                                groupIndex,
-                                nestedIndex: index,
-                              })
+                        <div
+                          className="filter-block filter-block__clickable d-flex align-items-center justify-content-center"
+                          data-id={index}
+                        >
+                          <OverlayTrigger
+                            popperConfig={{
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, 8],
+                                  },
+                                },
+                              ],
+                            }}
+                            onToggle={(f) => {
+                              if (!f) {
+                                setActive(null);
+                              } else {
+                                setActive({
+                                  ...nestedPredicate,
+                                  pos: { groupIndex, nestedIndex: index },
+                                });
+                              }
+                            }}
+                            show={
+                              active ? active.id === nestedPredicate.id : false
                             }
+                            trigger="click"
+                            placement="bottom"
+                            transition={false}
+                            rootClose={true}
+                            overlay={active ? popover() : <></>}
                           >
-                            <Cross />
-                          </div>
+                            <div className="d-flex align-items-center justify-content-center">
+                              <div className="cover">
+                                <span className="filter-block__icon">
+                                  <Link />
+                                  &nbsp;{nestedPredicate.readable}
+                                </span>
+                              </div>
+                              <p className="filter-block__deatils">
+                                &nbsp;{" "}
+                                {comparison.get(nestedPredicate.comparison) +
+                                  " " +
+                                  nestedPredicate.value}
+                              </p>
+                              {/* cancel button */}
+                              <div
+                                className="filter-block__delete"
+                                onClick={() =>
+                                  handleDeletePredicate(nestedPredicate, {
+                                    groupIndex,
+                                    nestedIndex: index,
+                                  })
+                                }
+                              >
+                                <Cross />
+                              </div>
+                            </div>
+                          </OverlayTrigger>
                         </div>
-                      </OverlayTrigger>
-                    </div>
-                    {/* add predicate */}
-                {/* <pre>{groupIndex +"--"+ +(predicates.length-1)}</pre> */}
+                        {/* add predicate */}
+                        {/* <pre>{groupIndex +"--"+ +(predicates.length-1)}</pre> */}
 
-                    {(index == item.predicate.length - 1) && (
-                      <AddOnPredicate
-                        handlePredicate={(event, newPredicate) =>
-                          handleAddPredicateButton(
-                            event,
-                            newPredicate,
-                            item,
-                            groupIndex
-                          )
-                        }
-                      />
-                    )}
-                  </div>
-                  {((index < item.predicate.length - 1) || ((item.predicate.length-1 == index) && (predicates.length-1 != groupIndex)) )&& (
+                        {index == item.predicate.length - 1 && (
+                          <AddOnPredicate
+                            handlePredicate={(event, newPredicate) =>
+                              handleAddPredicateButton(
+                                event,
+                                newPredicate,
+                                item,
+                                groupIndex
+                              )
+                            }
+                          />
+                        )}
+                      </div>
+                      {index < item.predicate.length - 1 && (
+                        <FilterConnectionSwitcher
+                          item={item}
+                          handleSelect={(type) => {
+                            handleFilterConnectionSwitcher(type, {
+                              groupIndex,
+                              index,
+                            });
+                          }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+                {predicates.length > 1 &&
+                  predicates.length - 1 !== groupIndex && (
+                    <>
                     <FilterConnectionSwitcher
-                      item={item}
-                      newClass={`${item.predicate.length-1  == index ? "filter-connection__seperate-group" : ''}`}
+                      item={predicates[0].type}
                       handleSelect={(type) => {
                         handleFilterConnectionSwitcher(type, {
                           groupIndex,
-                          index,
+                          nestedIndex: -1,
                         });
                       }}
+                      newClass={`filter-connection__seperate-group`}
                     />
+                    </>
                   )}
-                </div>
-              );
-            });
+              </>
+            );
           } else {
             return (
-              <div className="d-flex align-items-center align-items-center" key={groupIndex}>
+              <div
+                className="d-flex align-items-center align-items-center"
+                key={groupIndex}
+              >
                 <div
                   className="filter-block filter-block__clickable d-flex align-items-center justify-content-center"
                   data-id={groupIndex}
@@ -345,7 +394,6 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                         });
                       }
                     }}
-                    show={active ? active.id === item.id : false}
                     trigger="click"
                     placement="bottom"
                     transition={false}
@@ -362,7 +410,8 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                         </span>
                       </div>
                       <p className="filter-block__deatils">
-                        &nbsp; {comparison.get(item.comparison) + " " + item.value}
+                        &nbsp;{" "}
+                        {comparison.get(item.comparison) + " " + item.value}
                       </p>
                       {/* cancel button */}
                       <div
@@ -391,13 +440,16 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
                   />
                 </div>
                 {/* <pre>{groupIndex +"--"+ +(predicates.length-1)}</pre> */}
-                {groupIndex < predicates.length - 1 && (
-                  <FilterConnectionSwitcher
-                    item={item}
-                    handleSelect={() => {}}
-                    newClass={`filter-connection__seperate-group`}
-                  />
-                )}
+                {groupIndex < predicates.length - 1 &&
+                  (groupIndex !== 1 || groupIndex !== 0) && (
+                    <FilterConnectionSwitcher
+                      item={item}
+                      handleSelect={(type) => {
+                        handleFilterConnectionSwitcher(type,{groupIndex,nestedIndex:-1})
+                      }}
+                      newClass={`filter-connection__seperate-group`}
+                    />
+                  )}
               </div>
             );
           }
@@ -408,7 +460,7 @@ const PredicatesRep = ({ predicates, setPredicates, handlePredicate }) => {
 };
 
 const FilterConnectionSwitcher = ({ item, handleSelect, newClass }) => {
-  // console.log(item);
+  console.log(item);
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -417,13 +469,13 @@ const FilterConnectionSwitcher = ({ item, handleSelect, newClass }) => {
       >
         {item.type == "or" ? "or" : "and"}
       </Dropdown.Toggle>
-      <Dropdown.Menu
-        onSelect={(e) => {
-          console.log(e);
-        }}
-      >
-        <Dropdown.Item> and </Dropdown.Item>
-        <Dropdown.Item>or</Dropdown.Item>
+      <Dropdown.Menu>
+        {["and", "or"].map((item, i) => (
+          <Dropdown.Item key={i} onClick={() => handleSelect(item)}>
+            {" "}
+            {item}
+          </Dropdown.Item>
+        ))}
       </Dropdown.Menu>
     </Dropdown>
   );
